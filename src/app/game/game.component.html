@@ -1,4 +1,4 @@
-<app-player *ngFor="let player of game.players; let i = index" class="player-position"  
+<app-player *ngFor="let player of game.players; let i = index" class="player-position"
     [ngStyle]="{ top: 100 + (i*110) + 'px' }" [name]="player"></app-player>
 
 
@@ -24,6 +24,6 @@
 
 </div>
 
-<button class="btn-add" mat-fab color="accent" style="color: rgb(255, 94, 0); background-color: black;">
+<button class="btn-add" mat-fab color="accent" (click)="openDialog()" style="color: rgb(255, 94, 0); background-color: black;">
     <mat-icon>person_add</mat-icon>
-  </button>
+</button>
