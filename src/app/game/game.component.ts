@@ -48,7 +48,15 @@ export class GameComponent implements OnInit {
     console.log(dialogRef)
 
     dialogRef.afterClosed().subscribe(name => {
-      this.game.players.push(name);
+
+      try {
+        if(name.length > 0) {
+          this.game.players.push(name);
+        }
+      } catch {
+        return;
+      }
+     
     });
   }
 }
