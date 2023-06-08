@@ -1,5 +1,4 @@
-<mat-card>
-    <mat-card-title>Titel</mat-card-title>
-    <mat-card-content>Content</mat-card-content>
-  </mat-card>
-  
+<mat-card style="background-color: white; padding: 10px;">
+    <mat-card-title>{{ card ? title: 'Ziehe eine Karte'}}</mat-card-title>
+    <mat-card-content>{{ card ? description : "oder bist du nicht durstig?" }}</mat-card-content>
+</mat-card>
