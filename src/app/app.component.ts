@@ -12,7 +12,7 @@ export class AppComponent {
   items$: Observable<any[]>;
 
   constructor() {
-    const aCollection = collection(this.firestore, 'items')
+    const aCollection = collection(this.firestore, 'games')
     this.items$ = collectionData(aCollection);
   }
 }
