@@ -15,6 +15,7 @@ export class GameComponent implements OnInit {
   pickCardAnimation = false;
   currentCard: string = "";
   game!: Game;
+  item$: any;
   
 
   constructor(private firestore: Firestore, public dialog: MatDialog) { }
