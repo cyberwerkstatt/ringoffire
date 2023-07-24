@@ -14,7 +14,7 @@ export class GameComponent implements OnInit {
 
   pickCardAnimation = false;
   currentCard: string = "";
-  game!: Game;
+  game!: Game
   item$: any;
   
 
@@ -23,8 +23,9 @@ export class GameComponent implements OnInit {
   ngOnInit(): void {
     this.newGame();
     let aCollection = collection(this.firestore, 'games')
-    this.item$ = collectionData(aCollection);
-    console.log("game update", this.item$)
+    this.item$ = collectionData(aCollection).subscribe((game) => {
+      console.log("game update", game)
+    });
   }
  
 
