@@ -5,6 +5,8 @@ import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 
 
+
+
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
@@ -31,7 +33,7 @@ export class GameComponent implements OnInit {
 
   newGame() {
     this.game = new Game();
-    // console.log(this.game)
+    this.firestore.collection("games").add({"hallo":"welt"})
   }
 
   takeCard() {
