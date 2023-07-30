@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Game } from 'src/models/game';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
-import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, addDoc } from '@angular/fire/firestore';
 
 
 
@@ -33,7 +33,10 @@ export class GameComponent implements OnInit {
 
   newGame() {
     this.game = new Game();
-    this.firestore.collection("games").add({"hallo":"welt"})
+    let db = collection(this.firestore,"games");
+    addDoc(db,{
+      "Hello":"Test124"
+    })
   }
 
   takeCard() {
