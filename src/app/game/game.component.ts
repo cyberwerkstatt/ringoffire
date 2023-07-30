@@ -2,9 +2,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Game } from 'src/models/game';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
-import { Firestore, collection, collectionData, addDoc, doc, getDoc } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, addDoc, doc, docData } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
-import { docData} from '@angular/fire/firestore';
 
 
 
@@ -28,7 +27,10 @@ export class GameComponent implements OnInit {
     this.newGame();
     this.route.params.subscribe((params) => {
       let params_id = params["id"];
-      let aCollection = collection(this.firestore, 'games');     
+      let aCollection = collection(this.firestore, 'games');
+      let docRef = doc(aCollection, params_id)
+      let docdata = docData(docRef)
+      console.log(docdata)
       this.item$ = collectionData(aCollection).subscribe((game) => {
         // console.log("game update", game)
       });
