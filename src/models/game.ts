@@ -16,6 +16,15 @@ export class Game {
         // this.shuffle(this.players); // Mischen der Spieler (falls Spieler vorhanden sind)
     }
 
+    public toJson(){
+        return{
+            players: this.players,
+            stack: this.stack,
+            playedCards: this.playedCards,
+            currentplayer: this.currentPlayer
+        }
+    }
+
     private shuffle(array: any[]): void {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));

@@ -2,7 +2,9 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Game } from 'src/models/game';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
-import { Firestore, collection, collectionData, addDoc } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, addDoc, doc, getDoc } from '@angular/fire/firestore';
+import { ActivatedRoute } from '@angular/router';
+import { docData} from '@angular/fire/firestore';
 
 
 
@@ -18,25 +20,32 @@ export class GameComponent implements OnInit {
   currentCard: string = "";
   game!: Game
   item$: any;
-  
 
-  constructor(private firestore: Firestore, public dialog: MatDialog) { }
+
+  constructor(private route: ActivatedRoute, private firestore: Firestore, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.newGame();
-    let aCollection = collection(this.firestore, 'games')
-    this.item$ = collectionData(aCollection).subscribe((game) => {
-      console.log("game update", game)
+    this.route.params.subscribe((params) => {
+      let params_id = params["id"];
+      let aCollection = collection(this.firestore, 'games');     
+      this.item$ = collectionData(aCollection).subscribe((game) => {
+        // console.log("game update", game)
+      });
     });
+
   }
- 
+
+  
+
 
   newGame() {
     this.game = new Game();
-    let db = collection(this.firestore,"games");
-    addDoc(db,{
-      "Hello":"Test124"
-    })
+
+    // let db = collection(this.firestore,"games");
+    // addDoc(db,
+    //   this.game.toJson()
+    // )
   }
 
   takeCard() {
@@ -64,13 +73,13 @@ export class GameComponent implements OnInit {
     dialogRef.afterClosed().subscribe(name => {
 
       try {
-        if(name.length > 0) {
+        if (name.length > 0) {
           this.game.players.push(name);
         }
       } catch {
         return;
       }
-     
+
     });
   }
 }
