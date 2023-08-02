@@ -2,8 +2,9 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Game } from 'src/models/game';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
-import { Firestore, collection, collectionData, addDoc, doc, docData } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, addDoc, doc, docData, updateDoc } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
+import { update } from '@angular/fire/database';
 
 
 
@@ -19,6 +20,7 @@ export class GameComponent implements OnInit {
   currentCard: string = "";
   game!: Game
   item$: any;
+  gameId!: string;
 
 
   constructor(private route: ActivatedRoute, private firestore: Firestore, public dialog: MatDialog) { }
@@ -27,19 +29,22 @@ export class GameComponent implements OnInit {
     this.newGame();
     this.route.params.subscribe((params) => {
       let params_id = params["id"];
+      this.gameId = params_id;
       let aCollection = collection(this.firestore, 'games');
       let docRef = doc(aCollection, params_id)
-      docData(docRef).subscribe(game => console.log(game))
-      
-      // console.log(docdata)
-      // this.item$ = collectionData(aCollection).subscribe((game) => {
-      //     console.log(this.item$)
-      // });
+      docData(docRef).subscribe((game: any) => {
+        this.game.currentPlayer = game.currentPlayer;
+        this.game.playedCards = game.playedCards;
+        this.game.players = game.players;
+        this.game.stack = game.stack;
+        console.log(game)
+      })
+
     });
 
   }
 
-  
+  // 
 
 
   newGame() {
@@ -78,11 +83,28 @@ export class GameComponent implements OnInit {
       try {
         if (name.length > 0) {
           this.game.players.push(name);
+          this.saveGame();
         }
       } catch {
         return;
       }
 
+    });
+  }
+
+  async saveGame() {
+    this.route.params.subscribe(async (params) => {
+      let params_id = params["id"];
+      let aCollection = collection(this.firestore, 'games');
+      let docRef = doc(aCollection, params_id);
+      await updateDoc(docRef, this.game.toJson())
+
+      
+      
+      // docData(docRef).subscribe((game: any) => {
+      //   let db = collection(this.firestore, "games");
+      //   update(db, this.game.toJson());
+      // });
     });
   }
 }
