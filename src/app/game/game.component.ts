@@ -100,7 +100,6 @@ export class GameComponent implements OnInit {
       await updateDoc(docRef, this.game.toJson())
 
       
-      
       // docData(docRef).subscribe((game: any) => {
       //   let db = collection(this.firestore, "games");
       //   update(db, this.game.toJson());
